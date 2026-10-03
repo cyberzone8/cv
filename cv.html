@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>European CV · Gustavo Godoy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root { --bg:#f1f3f1; --card:#fff; --fg:#1c2428; --mut:#5b6870; --ac:#0b5d4b; --bd:#dfe3e0; --side:#eef2f0; }
+        * { box-sizing: border-box; }
+        body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+        a { color:var(--ac); }
+        .hidden { display:none !important; }
+
+        /* Sticky toolbar: language + filters + copy actions */
+        .toolbar { position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--bd); padding:10px 16px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+        .toolbar .row { max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+        .toolbar .lbl { font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin-right:4px; }
+        .toolbar .filter-buttons { display:contents; }
+        .toolbar .filter-buttons h3 { display:none; }
+        .toolbar button { font:inherit; font-size:13px; border:1px solid var(--bd); background:#fff; color:var(--fg); padding:6px 12px; border-radius:999px; cursor:pointer; }
+        .toolbar button:hover { border-color:var(--ac); }
+        .toolbar .filter-buttons button.active { background:var(--ac); color:#fff; border-color:var(--ac); }
+        .toolbar .actions { margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+        .toolbar .actions button { border-radius:8px; border-color:var(--ac); color:var(--ac); }
+        .toolbar .actions button.primary { background:var(--ac); color:#fff; }
+        .toolbar .langsw { display:inline-flex; margin-right:6px; }
+        .toolbar .langsw button { border-radius:0; padding:6px 10px; font-weight:700; border-color:var(--ac); color:var(--ac); }
+        .toolbar .langsw button:first-child { border-radius:8px 0 0 8px; }
+        .toolbar .langsw button:last-child { border-radius:0 8px 8px 0; border-left:0; }
+        .toolbar .langsw button.active { background:var(--ac); color:#fff; }
+        .toolbar .status { max-width:1180px; margin:6px auto 0; font-size:13px; color:var(--mut); }
+
+        /* Layout */
+        .container { max-width:1180px; margin:20px auto; background:#fff; border:1px solid var(--bd); border-radius:14px; overflow:hidden; display:grid; grid-template-columns:330px 1fr; }
+        .column-1 { background:var(--side); padding:24px 22px; border-right:1px solid var(--bd); }
+        .column-2 { padding:28px 34px; min-width:0; }
+        header { margin-bottom:6px; overflow:hidden; }
+        header h1 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--mut); margin:0; float:left; }
+        header nav { float:right; }
+        header nav ol { list-style:none; margin:0; padding:0; display:flex; gap:12px; font-size:13px; }
+        header nav a { text-decoration:none; }
+        .imagen_circular { width:150px; height:150px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+        .column-1 .section { padding:0; margin:0; }
+        .column-1 .section > h1 { font-size:26px; line-height:1.15; margin:6px 0 10px; text-align:left; }
+        .contact-info p { margin:4px 0; font-size:14px; word-break:break-word; }
+        .contact-info i { width:18px; color:var(--ac); margin-right:6px; }
+        .icon-link { font-size:20px; margin-right:8px; color:var(--ac); text-decoration:none; }
+        .column-1 h3 { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ac); margin:18px 0 6px; border-bottom:1px solid var(--bd); padding-bottom:4px; }
+        .column-1 h3 i { margin-right:6px; }
+        .column-1 ul { list-style:none; padding:0; margin:6px 0; display:flex; flex-wrap:wrap; gap:5px; }
+        .column-1 ul li { background:#fff; border:1px solid var(--bd); border-radius:6px; padding:2px 8px; font-size:12.5px; }
+        #print-btn { font:inherit; }
+
+        .column-2 .section { margin-bottom:26px; }
+        .column-2 h2 { font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:var(--ac); border-bottom:2px solid var(--ac); padding-bottom:5px; margin:0 0 12px; }
+        .column-2 h3 { font-size:15.5px; margin:0 0 2px; }
+        .column-2 p { margin:3px 0; }
+        .column-2 .section > ul { padding-left:18px; margin:8px 0; }
+        .column-2 .section > ul li { margin:6px 0; }
+        .sub-list { margin:6px 0 0 18px; padding:0; font-size:.92em; }
+        .sub-list li { margin:2px 0; }
+        .note { font-size:.9em; opacity:.85; }
+        .experience-item, .certification-item { border-left:3px solid var(--bd); padding:2px 0 2px 14px; margin:0 0 14px; }
+        .experience-item:hover, .certification-item:hover { border-left-color:var(--ac); }
+        .description { color:#2f3a40; }
+        footer { grid-column:1/-1; text-align:center; padding:14px; border-top:1px solid var(--bd); color:var(--mut); font-size:13px; }
+        #toast { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:#1c2428; color:#fff; padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; pointer-events:none; transition:opacity .25s; z-index:50; }
+        #toast.show { opacity:1; }
+
+        @media (max-width:860px) {
+            .container { grid-template-columns:1fr; margin:0; border-radius:0; border:0; }
+            .column-1 { border-right:0; border-bottom:1px solid var(--bd); }
+            .column-2 { padding:22px 18px; }
+            .toolbar .actions { margin-left:0; }
+        }
+        @media print {
+            body { background:#fff; }
+            .toolbar, #toast { display:none !important; }
+            .container { display:block; border:0; margin:0; }
+            .column-1 { background:#fff; border:0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div class="row">
+            <span class="lbl" data-es="Filtrar">Filter</span>
+            <span id="chips-slot" style="display:contents"></span>
+            <div class="actions">
+                <span class="langsw">
+                    <button data-lang="en" onclick="setLang('en')">EN</button><button data-lang="es" onclick="setLang('es')">ES</button>
+                </span>
+                <button class="primary" onclick="copyRich()" data-es="Copiar con formato">Copy with formatting</button>
+                <button onclick="copyText()" data-es="Copiar texto plano">Copy plain text</button>
+                <span id="print-slot" style="display:contents"></span>
+            </div>
+        </div>
+        <div class="status" id="status"></div>
+    </div>
+
+    <div class="container">
+
+        <!-- Column 1 -->
+        <div class="column column-1">
+
+            <header>
+                <h1>CV</h1>
+                <nav>
+                    <ol>
+                        <li><a href="index.html" data-es="Inicio">Home</a></li>
+                        <li><a href="https://cyberzone8.github.io/psychosphere-technosphere/" data-es="Portafolio">Portfolio</a></li>
+                    </ol>
+                </nav>
+            </header>
+            <br>
+            <center><img src="./assets/img/conference.jpeg" alt="Conference" class="imagen_circular" onerror="this.style.display='none'"></center>
+            <br>
+
+            <!-- Personal Information and Availability -->
+            <div class="section">
+                <h1>Gustavo Godoy</h1>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i>Cork, Ireland</p>
+                    <p><i class="fas fa-phone"></i>+353 83 137 2529</p>
+                    <p><i class="fas fa-envelope"></i>cyberzone8.tech@gmail.com</p>
+                    <p>
+                        <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
+                            <i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/cyberzone8" target="_blank" class="icon-link">
+                            <i class="fab fa-github"></i></a>
+                    </p>
+                    <h3 data-es="Disponibilidad">Availability</h3>
+                    <p data-es="Tiempo parcial">Part-time</p>
+                    <p data-es="Mañana: sábado y domingo<br>Tarde: lunes a sábado<br>Noche: lunes a sábado">Morning: Saturday and Sunday <br>
+                    Afternoon: Monday to Saturday <br>
+                    Evening: Monday to Saturday</p>
+                </div>
+
+                <!-- Language -->
+                <div class="section">
+                    <h3><i class="fas fa-language"></i><span data-es="Idiomas">Languages</span></h3>
+                    <p data-es="Español: nativo / Inglés: B1<br>Portugués: A1 / Chino: A1">Spanish: Native / English: B1 <br>
+                    Portuguese: A1 / Chinese: A1</p>
+                </div>
+
+                <!-- Category Selector -->
+                <div class="section filter-buttons">
+                    <h3>Filter by Categories</h3>
+                    <button data-cat="all" onclick="filterCategory('all')" data-es="Todo">All</button>
+                    <button data-cat="A" onclick="filterCategory('A')" data-es="Liderazgo y gestión">Leadership and Management</button>
+                    <button data-cat="B" onclick="filterCategory('B')" data-es="Investigación y análisis">Research and Analytical Skills</button>
+                    <button data-cat="C" onclick="filterCategory('C')" data-es="Competencias técnicas">Technical Skills</button>
+                    <button data-cat="D" onclick="filterCategory('D')" data-es="Educación y formación">Educational and Training Expertise</button>
+                    <button data-cat="E" onclick="filterCategory('E')" data-es="Sector público y compras públicas">Public Sector and Procurement</button>
+                    <button data-cat="F" onclick="filterCategory('F')" data-es="Atención al cliente y ventas">Customer Service and Sales Excellence</button>
+                    <button data-cat="G" onclick="filterCategory('G')" data-es="Marketing y emprendimiento">Marketing and Entrepreneurship</button>
+                    <button data-cat="H" onclick="filterCategory('H')" data-es="Sostenibilidad y desarrollo territorial">Sustainability and Territorial Development</button>
+                </div>
+
+                <!-- Skills and Competencies -->
+                <div class="section">
+                    <h3 data-es="Competencias y habilidades">Skills and Competencies</h3>
+                    <ul>
+                        <li class="cv-item category-A category-F" data-es="Trabaja bien bajo presión">Works well under pressure</li>
+                        <li class="cv-item category-A category-F" data-es="Responsable y confiable">Responsible and reliable</li>
+                        <li class="cv-item category-A" data-es="Gestión del tiempo">Time management</li>
+                        <li class="cv-item category-A" data-es="Colaboración y trabajo en equipo">Collaboration and Teamwork</li>
+                        <li class="cv-item category-A" data-es="Ética de trabajo íntegra y responsable">Ethical and Responsible Work Ethic</li>
+                        <li class="cv-item category-A" data-es="Liderazgo y gestión">Leadership and Management</li>
+                        <li class="cv-item category-A category-E category-H" data-es="Gestión de proyectos (investigación, innovación, extensión, docencia, ambientales)">Project Management (research, innovation, outreach, teaching, environmental)</li>
+                        <li class="cv-item category-A category-E" data-es="Cooperación internacional y oportunidades de financiamiento">International cooperation and funding opportunities</li>
+                        <li class="cv-item category-B" data-es="Capacidades de investigación y análisis">Research and Analytical Skills</li>
+                        <li class="cv-item category-B category-C" data-es="Programación y análisis de datos">Programming and Data Analysis</li>
+                        <li class="cv-item category-B category-C" data-es="Modelamiento matemático y estadístico">Mathematical and Statistical Modeling</li>
+                        <li class="cv-item category-B category-C" data-es="Estadística geoespacial y evaluación espacial multicriterio">Geospatial statistics and multi-criteria spatial evaluation</li>
+                        <li class="cv-item category-B category-H" data-es="Pensamiento sistémico y modelamiento de dinámica de sistemas">Systems thinking and system dynamics modelling</li>
+                        <li class="cv-item category-B category-H" data-es="Modelamiento de simulación ambiental y social">Environmental and social simulation modelling</li>
+                        <li class="cv-item category-B category-H" data-es="Modelamiento de dispersión de calidad del aire (AERMOD)">Air-quality dispersion modelling (AERMOD)</li>
+                        <li class="cv-item category-B category-C" data-es="Calidad, incertidumbre y metadatos de la información geográfica (ISO/TC211)">Geographic information quality, uncertainty and metadata (ISO/TC211)</li>
+                        <li class="cv-item category-C" data-es="Sistemas de Información Geográfica (SIG)">Geographic Information Systems (GIS)</li>
+                        <li class="cv-item category-C" data-es="Teledetección y adquisición de datos">Remote Sensing and Data Acquisition</li>
+                        <li class="cv-item category-C" data-es="Geodesia, posicionamiento GNSS, topografía y fotogrametría">Geodesy, GNSS positioning, surveying and photogrammetry</li>
+                        <li class="cv-item category-C" data-es="Cartografía, web mapping e infraestructuras de datos espaciales">Cartography and web mapping / spatial data infrastructures</li>
+                        <li class="cv-item category-C" data-es="Captura de datos con drones (UAV) para cartografía">UAV (drone) data capture for mapping</li>
+                        <li class="cv-item category-C" data-es="Internet de las Cosas (IoT) y monitoreo con sensores">Internet of Things (IoT) and sensor-based monitoring</li>
+                        <li class="cv-item category-C" data-es="Dominio de software">Software Proficiency</li>
+                        <li class="cv-item category-D" data-es="Tecnología educativa">Educational Technology</li>
+                        <li class="cv-item category-D" data-es="Diseño curricular e instruccional; aprendizaje en línea y combinado">Curriculum and instructional design; online and blended learning</li>
+                        <li class="cv-item category-D" data-es="Docencia por competencias y aprendizaje activo">Competency-based teaching and active learning</li>
+                        <li class="cv-item category-D category-F" data-es="Divulgación científica y comunicación pública">Science outreach and public communication</li>
+                        <li class="cv-item category-E category-F category-G" data-es="Licitaciones y compras públicas">Public Tender and Procurement</li>
+                        <li class="cv-item category-F" data-es="Cercano y accesible">Easily approachable</li>
+                        <li class="cv-item category-F" data-es="Orientación a resultados">Focus on results</li>
+                        <li class="cv-item category-F" data-es="Comunicación y presentación">Communication and Presentation</li>
+                        <li class="cv-item category-G" data-es="Emprendimiento e innovación con enfoque territorial">Entrepreneurship and innovation with a territorial focus</li>
+                        <li class="cv-item category-G category-H" data-es="Economía circular y estrategia de plataformas digitales">Circular economy and digital platform strategy</li>
+                        <li class="cv-item category-H" data-es="Planificación, diagnóstico y evaluación de impacto ambiental">Environmental planning, diagnosis and impact assessment</li>
+                        <li class="cv-item category-H" data-es="Mitigación y adaptación al cambio climático">Climate change mitigation and adaptation</li>
+                        <li class="cv-item category-H" data-es="Gestión del riesgo de desastres y recuperación posdesastre">Disaster risk management and post-disaster recovery</li>
+                        <li class="cv-item category-H" data-es="Metabolismo urbano, ciudades y asentamientos humanos sostenibles">Urban metabolism, sustainable cities and human settlements</li>
+                        <li class="cv-item category-H" data-es="Infraestructura sostenible, turismo y rehabilitación de ecosistemas">Sustainable infrastructure, tourism and ecosystem rehabilitation</li>
+                    </ul>
+
+                    <h3 data-es="Software y lenguajes de programación">Software and programming languages</h3>
+                    <ul>
+                        <li class="cv-item category-A">Microsoft Project</li>
+                        <li class="cv-item category-A">Asana / Trello</li>
+                        <li class="cv-item category-A">Jira</li>
+                        <li class="cv-item category-A">Slack</li>
+                        <li class="cv-item category-A category-D">Zoom / Microsoft Teams</li>
+                        <li class="cv-item category-B category-E category-F">Excel</li>
+                        <li class="cv-item category-B category-C">MATLAB / Octave</li>
+                        <li class="cv-item category-B">SPSS / SAS</li>
+                        <li class="cv-item category-B">Tableau / Power BI</li>
+                        <li class="cv-item category-B category-H">Vensim</li>
+                        <li class="cv-item category-C">ArcGIS / QGIS</li>
+                        <li class="cv-item category-C">Erdas Imagine / ENVI</li>
+                        <li class="cv-item category-C">AutoCAD</li>
+                        <li class="cv-item category-C category-B">RStudio</li>
+                        <li class="cv-item category-D">Moodle / Canvas</li>
+                        <li class="cv-item category-D">Camtasia / OBS Studio</li>
+                        <li class="cv-item category-D">Kahoot / Quizlet</li>
+                        <li class="cv-item category-G">Mailchimp / HubSpot</li>
+                        <li class="cv-item category-G">Canva</li>
+                    </ul>
+                    <ul>
+                        <li class="cv-item category-A category-B category-C category-D category-E category-F category-G">Python</li>
+                        <li class="cv-item category-A category-B category-C category-E category-F">R</li>
+                        <li class="cv-item category-A category-B category-C category-E category-F category-G">SQL</li>
+                        <li class="cv-item category-C category-D category-G">JavaScript</li>
+                        <li class="cv-item category-D category-G">HTML/CSS</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="print-btn" onclick="printCV()" data-es="Imprimir / PDF">Print / PDF</button>
+
+        </div>
+
+        <!-- Column 2 -->
+        <div class="column column-2">
+
+            <!-- Professional Summary -->
+            <div class="section">
+                <h2>
+                    <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
+                        <i class="fab fa-linkedin"></i></a> <span data-es="Perfil profesional">Professional Summary</span></h2>
+                <p data-es="Profesional de la geomática (Ingeniero de Ejecución en Geomensura), docente universitario e investigador con más de 15 años de experiencia en información geográfica, teledetección, sistemas complejos y dinámicos, sostenibilidad y desarrollo territorial. Completó la totalidad de los estudios del Doctorado en Sostenibilidad. Profesional con experiencia en diversas áreas, entre ellas:">Geomatics professional (Engineer in Geomensura), university lecturer and researcher with more than 15 years of experience in geographic information, remote sensing, complex and dynamic systems, sustainability and territorial development. Completed the full coursework of a Doctorate in Sustainability. Professional with experience in various areas, including:</p>
+
+                <ul>
+                    <!-- A -->
+                    <li class="cv-item category-A" data-es="<strong>Liderazgo:</strong> Jefe de una carrera universitaria (Ingeniería Geomática), representando a la institución en diversos foros públicos y privados."><strong>Leadership:</strong> Head of a university study program (Geomatic Engineering), representing the institution in various public and private forums.</li>
+                    <li class="cv-item category-A" data-es="<strong>Gestión de proyectos:</strong> Experiencia en la formulación, gestión y evaluación de proyectos de internacionalización, investigación, innovación, vinculación, extensión y docencia."><strong>Project Management:</strong> Expertise in the formulation, management, and evaluation of internationalization, research, innovation, outreach, extension, and teaching projects.</li>
+                    <li class="cv-item category-A" data-es="<strong>Desarrollo de estrategias:</strong> Diseñó e implementó el Observatorio Científico Escolar OCRE y creó una estrategia de cooperación en red para la vinculación de la comunidad con actores locales."><strong>Strategy Development:</strong> Designed and implemented the OCRE Scientific School Observatory and created a network cooperation strategy for community engagement with local stakeholders.</li>
+                    <li class="cv-item category-A" data-es="<strong>Relaciones institucionales:</strong> Estableció convenios con municipios, instituciones educativas y empresas; coordinó las relaciones internacionales del proyecto Erasmus+ INCHIPE."><strong>Institutional Relations:</strong> Established agreements with municipalities, educational institutions, and companies; coordinated international relations of the Erasmus+ INCHIPE project.</li>
+                    <!-- B -->
+                    <li class="cv-item category-B" data-es="<strong>Investigación científica:</strong> Centrada en sistemas, sistemas complejos, sistemas dinámicos y el estudio de la teoría del metabolismo urbano para la sostenibilidad de las ciudades."><strong>Scientific Research:</strong> Focused on systems, complex systems, dynamic systems, and the study of urban metabolism theory for sustainability in cities.</li>
+                    <li class="cv-item category-B" data-es="<strong>Análisis de datos:</strong> Competente en aprendizaje automático, estadística geoespacial, análisis descriptivo e inferencial y análisis de series de tiempo."><strong>Data Analysis:</strong> Skilled in machine learning, geospatial statistics, descriptive and inferential analysis, and time series analysis.</li>
+                    <li class="cv-item category-B" data-es="<strong>Publicaciones:</strong> Autor de artículos y capítulos de libro, colaborador en revistas internacionales y evaluador de tesis de magíster para instituciones de prestigio."><strong>Publications:</strong> Authored articles and book chapters, contributed to international journals, and evaluated master's theses for prestigious institutions.</li>
+                    <li class="cv-item category-B" data-es="<strong>Congresos:</strong> Expositor en congresos nacionales e internacionales sobre aprendizaje de macrocompetencias, evaluación de la calidad temática, normas de calidad de la información geográfica, índices de causalidad de incendios forestales e IoT para la geomática."><strong>Conferences:</strong> Speaker at national and international conferences on topics such as macrocompetence learning, thematic quality evaluation, geographic information quality standards, forest fire causality indexes and IoT for geomatics.</li>
+                    <!-- C -->
+                    <li class="cv-item category-C" data-es="<strong>Ingeniería geomática:</strong> Amplia experiencia en topografía, teledetección, geodesia, cartografía, SIG y fotogrametría."><strong>Geomatic Engineering:</strong> Extensive experience in surveying, remote sensing, geodesy, cartography, GIS, and photogrammetry.</li>
+                    <li class="cv-item category-C" data-es="<strong>Calidad de la información geográfica:</strong> Especialista en evaluación de la calidad de la información geográfica; integrante del comité espejo nacional de ISO/TC211 (Información geográfica / Geomática)."><strong>Geographic Information Quality:</strong> Specialist in evaluation of the quality of geographic information; member of the national mirror committee for ISO/TC211 (Geographic information / Geomatics).</li>
+                    <li class="cv-item category-C" data-es="<strong>Programación:</strong> Dominio de Python, R, JavaScript y herramientas SIG."><strong>Programming:</strong> Proficient in Python, R, JavaScript, and GIS tools.</li>
+                    <li class="cv-item category-C" data-es="<strong>Asistencia técnica:</strong> Aportó experiencia en instrumentación topográfica y geodésica, incluida la medición de colectores de aguas lluvias tras un terremoto."><strong>Technical Assistance:</strong> Provided expertise in topographic and geodetic instrumentation, including stormwater drainage measurement post-earthquake.</li>
+                    <li class="cv-item category-C" data-es="<strong>Tecnologías emergentes:</strong> Diplomado técnico en Internet de las Cosas y cursos de MIT Professional Education en inteligencia sensorial, plataformas digitales y estrategia de diseño de producto."><strong>Emerging Technologies:</strong> Technical diploma in Internet of Things and MIT Professional Education courses in sensory intelligence, digital platforms and product design strategy.</li>
+                    <li class="cv-item category-C" data-es="<strong>Dominio de software:</strong> Uso avanzado de AutoCAD, herramientas ofimáticas y software de análisis espacial."><strong>Software Proficiency:</strong> Advanced use of AutoCAD, office tools, and spatial analysis software.</li>
+                    <!-- D -->
+                    <li class="cv-item category-D" data-es="<strong>Docencia en educación superior:</strong> Más de 15 años de experiencia enseñando geomática, metodología de la investigación, SIG, teledetección y otras materias a nivel universitario."><strong>Higher Education Teaching:</strong> Over 15 years of experience teaching geomatics, research methodology, GIS, remote sensing, and more at the university level.</li>
+                    <li class="cv-item category-D" data-es="<strong>Desarrollo curricular:</strong> Lideró el rediseño curricular de la carrera de Ingeniería Geomática."><strong>Curriculum Development:</strong> Led the curricular redesign of the geomatic engineering program.</li>
+                    <li class="cv-item category-D" data-es="<strong>Mentoría:</strong> Patrocinó y evaluó numerosos proyectos de habilitación profesional y de título en diversos temas de geomática."><strong>Mentorship:</strong> Sponsored and examined numerous professional habilitation and graduation projects in diverse topics related to geomatics.</li>
+                    <li class="cv-item category-D" data-es="<strong>Capacitación:</strong> Dictó talleres sobre aprendizaje combinado e híbrido, emprendimiento y sostenibilidad."><strong>Training:</strong> Conducted workshops on topics like blended and hybrid learning, entrepreneurship, and sustainability.</li>
+                    <!-- E -->
+                    <li class="cv-item category-E" data-es="<strong>Licitaciones del mercado público:</strong> Experiencia en la búsqueda y adjudicación de licitaciones del mercado público, con foco en proyectos geoespaciales y geomáticos."><strong>Public Market Tenders:</strong> Experienced in searching for and securing public market tenders, with a focus on geospatial and geomatic projects.</li>
+                    <li class="cv-item category-E" data-es="<strong>Asistencia técnica:</strong> Brindó apoyo técnico a entidades públicas, incluidas evaluaciones posdesastre para municipios."><strong>Technical Assistance:</strong> Provided technical support to public entities, including post-disaster assessments for municipalities.</li>
+                    <li class="cv-item category-E" data-es="<strong>Experiencia en el sector público:</strong> Participó en proyectos de cooperación internacional que fortalecen la investigación y la internacionalización en colaboración con universidades públicas."><strong>Public Sector Experience:</strong> Engaged in international cooperation projects, enhancing research and internationalization in collaboration with public universities.</li>
+                    <!-- F -->
+                    <li class="cv-item category-F" data-es="<strong>Comunicación:</strong> Dictó charlas y talleres a escuelas, comunidades y públicos profesionales, traduciendo temas técnicos en mensajes claros y accionables."><strong>Communication:</strong> Delivered talks and workshops to schools, communities and professional audiences, translating technical topics into clear, actionable messages.</li>
+                    <!-- G -->
+                    <li class="cv-item category-G" data-es="<strong>Emprendimiento e innovación:</strong> Formado como formador en emprendimiento e innovación con enfoque territorial; estudió economía circular y estrategia de productos y plataformas en MIT Professional Education."><strong>Entrepreneurship and Innovation:</strong> Trained as a trainer in entrepreneurship and innovation with a territorial focus; studied circular economy and product/platform strategy at MIT Professional Education.</li>
+                    <!-- H -->
+                    <li class="cv-item category-H" data-es="<strong>Sostenibilidad:</strong> Completó la totalidad de los cursos del Doctorado en Sostenibilidad: problemas ambientales globales, economía y política ambiental, modelamiento ecológico y de recursos, planificación y evaluación ambiental, gestión ambiental, turismo y asentamientos humanos sostenibles, cambio climático, gestión del riesgo de desastres y rehabilitación de ecosistemas."><strong>Sustainability:</strong> Completed the full Doctorate in Sustainability coursework: global environmental problems, environmental economics and policy, ecological and resource modelling, environmental planning and assessment, environmental management, sustainable tourism and human settlements, climate change, disaster risk management and ecosystem rehabilitation.</li>
+                    <li class="cv-item category-H" data-es="<strong>Desarrollo territorial:</strong> Aplica análisis geoespacial, simulación y marcos de sostenibilidad a problemas de planificación territorial, riesgo y sostenibilidad urbana."><strong>Territorial Development:</strong> Applies geospatial analysis, simulation and sustainability frameworks to territorial planning, risk and urban sustainability problems.</li>
+                </ul>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2>
+                    <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
+                        <i class="fab fa-linkedin"></i></a> <span data-es="Formación académica">Education</span></h2>
+
+                <div class="experience-item">
+                    <h3 data-es="Doctorado en Sostenibilidad — estudios completados">Doctorate in Sustainability (Doctorado en Sostenibilidad) — studies completed</h3>
+                    <p>Institution: Universidad Centro Panamericano de Estudios Superiores (UNICEPES), Zitácuaro, Michoacán, México</p>
+                    <p data-es="Constancia de terminación de estudios: 23 de septiembre de 2026">Certificate of completion of studies: September 23, 2026</p>
+                    <p class="description" data-es="Aprobó el 100% de los 90 créditos curriculares: 12 cursos y 5 seminarios de investigación. Línea de investigación: metabolismo urbano y sostenibilidad en ciudades.">Completed 100% of the 90 curricular credits: 12 courses and 5 research seminars. Research line: urban metabolism and sustainability in cities.</p>
+                    <ul class="sub-list">
+                        <li data-es="Introducción a los Problemas Ambientales Globales">Introduction to Global Environmental Problems</li>
+                        <li data-es="Introducción a la Sostenibilidad, Economía y Política Ambiental">Introduction to Sustainability, Environmental Economics and Policy</li>
+                        <li data-es="Modelos en Ecología y Gestión de Recursos Naturales (dinámica de sistemas, simulación ambiental y social)">Models in Ecology and Natural Resource Management (system dynamics, environmental and social simulation)</li>
+                        <li data-es="Ciencias Ambientales para la Toma de Decisiones">Environmental Sciences for Decision Making</li>
+                        <li data-es="Planificación y Evaluación Ambiental">Environmental Planning and Assessment</li>
+                        <li data-es="Gestión Ambiental">Environmental Management</li>
+                        <li data-es="Turismo Sostenible">Sustainable Tourism</li>
+                        <li data-es="Asentamientos Humanos Sostenibles">Sustainable Human Settlements</li>
+                        <li data-es="Gestión y Administración de Proyectos Ambientales">Management and Administration of Environmental Projects</li>
+                        <li data-es="Cambio Climático Global">Global Climate Change</li>
+                        <li data-es="Gestión de Riesgos de Desastres">Disaster Risk Management</li>
+                        <li data-es="Rehabilitación Ambiental Terrestre">Terrestrial Environmental Rehabilitation</li>
+                        <li data-es="Seminarios de Investigación I–IV y Seminario de Doctorado">Research Seminars I–IV and Doctoral Seminar</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3 data-es="Magíster en Evaluación y Gestión de la Información Geográfica">Master's degree in Evaluation and Management of Geographic Information (Magíster)</h3>
+                    <p data-es="Institución: Universidad de Jaén, España / Fecha: diciembre de 2016">Institution: Universidad de Jaén, Spain / Date: December 2016</p>
+                    <p class="description" data-es="Incluye el título de Experto Universitario en Gestión de la Calidad de la Información Geográfica.">Includes the University Expert qualification in Geographic Information Quality Management.</p>
+                </div>
+
+                <div class="experience-item">
+                    <h3 data-es="Ingeniero de Ejecución en Geomensura">Engineer in Geomensura (Ingeniero de Ejecución en Geomensura)</h3>
+                    <p data-es="Institución: Universidad de Concepción, Chile / Fecha: abril de 2008">Institution: Universidad de Concepción, Chile / Date: April 2008</p>
+                </div>
+
+                <div class="experience-item">
+                    <h3 data-es="Diplomados">Diplomas</h3>
+                    <ul class="sub-list">
+                        <li data-es="Diplomado Técnico en Internet de las Cosas — Fundación Carlos Slim, México (diciembre de 2020)">Technical Diploma in Internet of Things — Fundación Carlos Slim, México (December 2020)</li>
+                        <li data-es="Diplomado en Docencia para la Educación Superior — Universidad de Concepción (diciembre de 2015)">Diploma in Higher Education Teaching — Universidad de Concepción (December 2015)</li>
+                        <li data-es="Diplomado en Educación de Competencias Genéricas — Universidad de Concepción (diciembre de 2015)">Diploma in Education of Generic Competencies — Universidad de Concepción (December 2015)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="section">
+                <h2>
+                    <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
+                        <i class="fab fa-linkedin"></i></a> <span data-es="Experiencia profesional">Professional Experience</span></h2>
+
+                <div class="experience-item cv-item category-A category-D">
+                    <h3 data-es="Jefe de Carrera (Ingeniería Geomática)">Head of University Study Program (Geomatic Engineering)</h3>
+                    <p data-es="Institución: Universidad de Concepción, Campus Los Ángeles / Fechas: marzo de 2014 – marzo de 2018 (jefe de carrera interino de Ingeniería Geomática e Ingeniería en Geomensura, dic. 2013 – ene. 2014)">Institution: University of Concepción, Los Ángeles Campus / Dates: March 2014 - March 2018 (interim head of Geomatic Engineering and Geomensura Engineering, Dec 2013 - Jan 2014)</p>
+                    <p class="description" data-es="Dirigió y gestionó una carrera universitaria, representando a la institución en foros locales, nacionales e internacionales. Condujo el desarrollo e implementación de proyectos académicos y de investigación y estableció alianzas clave con organizaciones públicas y privadas.">Directed and managed a university study program, representing the institution in local, national, and international forums. Oversaw the development and implementation of academic and research projects, and established key partnerships with public and private organizations.</p>
+                </div>
+
+                <div class="experience-item cv-item category-B category-H">
+                    <h3 data-es="Investigador científico">Scientific Researcher</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: marzo de 2008 – marzo de 2024">Institution: University of Concepción / Dates: March 2008 - March 2024</p>
+                    <p class="description" data-es="Realizó investigación en información geográfica, sistemas complejos, sistemas dinámicos y sostenibilidad urbana. Publicó artículos y capítulos de libro y presentó en congresos nacionales e internacionales. Evaluó tesis de magíster y participó en comités científicos y revistas.">Conducted research in geographic information, complex systems, dynamic systems, and urban sustainability. Published articles and book chapters, and presented at national and international conferences. Evaluated master's theses and contributed to scientific committees and journals.</p>
+                </div>
+
+                <div class="experience-item cv-item category-C category-D">
+                    <h3 data-es="Docente universitario">University Lecturer</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: marzo de 2008 – marzo de 2024">Institution: University of Concepción / Dates: March 2008 - March 2024</p>
+                    <p class="description" data-es="Dictó asignaturas de geomática, SIG, teledetección, geodesia, cartografía y áreas afines. Brindó asistencia técnica en instrumentación topográfica y geodésica y desarrolló sistemas para la gestión de laboratorios y proyectos educativos.">Taught courses in geomatics, GIS, remote sensing, geodesy, cartography, and related fields. Provided technical assistance in topographic and geodetic instrumentation and developed systems for laboratory management and educational projects.</p>
+                    <ul class="sub-list">
+                        <li data-es="Introducción a la Ingeniería Geomática; Geomática en Obras Civiles; Levantamientos Locales">Introduction to Geomatic Engineering; Geomatics in Civil Works; Local Surveying</li>
+                        <li data-es="Cartografía y Sistemas de Información Geográfica; Sistemas de Información Geográfica">Cartography and Geographic Information Systems; Geographic Information Systems</li>
+                        <li data-es="Geodesia I; Topografía I, II y III; Topografía de Minas">Geodesy I; Topography I, II and III; Mine Surveying</li>
+                        <li data-es="Procesamiento de Datos de Sensores Remotos; Geoprocesamiento; Análisis de Datos e Información Geográfica">Remote Sensing Data Processing; Geoprocessing; Spatial Data and Information Analysis</li>
+                        <li data-es="Evaluación de la Calidad de la Información Geográfica; Tratamiento de Datos Geográficos en Ambiente SIG">Quality Evaluation of Geographic Information; Geographic Data Treatment in a GIS Environment</li>
+                        <li data-es="Metodología de la Investigación; Proyecto de Geomática; Habilitación Profesional / Proyectos de Título">Research Methodology; Geomatics Project; Professional Habilitation / Degree Projects</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item cv-item category-D category-A">
+                    <h3 data-es="Líder del rediseño curricular, Ingeniería Geomática">Curriculum Redesign Lead, Geomatic Engineering</h3>
+                    <p data-es="Institución: Universidad de Concepción, Campus Los Ángeles / Fecha: 2011">Institution: University of Concepción, Los Ángeles Campus / Date: 2011</p>
+                    <p class="description" data-es="Presidió e integró la comisión que modificó el plan de estudios de la carrera de Ingeniería Geomática.">Chaired and served on the commission that modified the study plan of the Geomatic Engineering program.</p>
+                </div>
+
+                <div class="experience-item cv-item category-D category-B category-C">
+                    <h3 data-es="Profesor patrocinante y evaluador de proyectos de título">Supervisor and Examiner of Professional Graduation Projects</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: 2009 – 2021">Institution: University of Concepción / Dates: 2009 - 2021</p>
+                    <p class="description" data-es="Patrocinó e integró comisiones de numerosos proyectos de título en Ingeniería Geomática e Ingeniería en Geomensura, sobre riesgo de incendios forestales, cambios en cobertura de nieve y glaciares, islas de calor urbanas, análisis territorial y de uso de suelo, WebGIS y web mapping, mapeo de vegetación acuática con Sentinel-2, monitoreo de manglares, evaluación de sequía con imágenes satelitales, simulación de crecimiento urbano y BIM.">Sponsored and sat on committees for numerous degree projects in Geomatic Engineering and Geomensura, covering forest fire risk, snow cover and glacier change, urban heat islands, land-use and territorial analysis, WebGIS and web mapping, aquatic vegetation mapping with Sentinel-2, mangrove monitoring, drought assessment with satellite imagery, urban growth simulation and BIM.</p>
+                </div>
+
+                <div class="experience-item cv-item category-A category-E category-B">
+                    <h3 data-es="Coordinador de Relaciones Internacionales, proyecto Erasmus+ INCHIPE">Coordinator of International Relations, Erasmus+ INCHIPE Project</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: junio de 2016 – en adelante">Institution: University of Concepción / Dates: June 2016 - onwards</p>
+                    <p class="description" data-es="Participó en la planificación y gestión del proyecto internacional «Programa para la Internacionalización en las Universidades de Chile y Perú (INCHIPE)», financiado por la Comisión Europea en el marco de Erasmus+. Completó sus módulos de formación en gestión de proyectos internacionales, acuerdos de cooperación y redes, oportunidades de financiamiento y planificación estratégica de la internacionalización.">Participated in the planning and management of the international project “Programa para la Internacionalización en las Universidades de Chile y Perú (INCHIPE)”, funded by the European Commission under Erasmus+. Completed its training modules on international project management, cooperation agreements and networks, funding opportunities, and strategic planning in internationalization.</p>
+                </div>
+
+                <div class="experience-item cv-item category-B category-A category-D category-H">
+                    <h3 data-es="Coinvestigador, Observatorio Estudiantil Regional (OCRE) — Proyecto UCO 1895">Co-investigator, Regional Student Observatory (OCRE) — Project UCO 1895</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: 2019 – 2020">Institution: University of Concepción / Dates: 2019 - 2020</p>
+                    <p class="description" data-es="Coinvestigador en la creación de un observatorio científico estudiantil regional; integrante del Observatorio Científico Regional Escolar Chile. Desarrolló una estrategia de cooperación en red con actores locales.">Co-investigator in the creation of a regional student science observatory; member of the Observatorio Científico Regional Escolar Chile. Developed a network cooperation strategy with local stakeholders.</p>
+                </div>
+
+                <div class="experience-item cv-item category-B category-C">
+                    <h3 data-es="Coinvestigador, Representación visual de la fotointerpretación topográfica del Biobío">Co-investigator, Visual Representation of Topographic Photointerpretation of Bío Bío</h3>
+                    <p data-es="Institución: Universidad de Concepción (VRID, creación artística) / Fechas: noviembre de 2016 – noviembre de 2018">Institution: University of Concepción (VRID, artistic creation) / Dates: November 2016 - November 2018</p>
+                    <p class="description" data-es="Investigación sobre la representación visual de los últimos 30 años de fotointerpretación topográfica de la provincia de Biobío mediante imágenes aéreas y de dron.">Research on the visual representation of the last 30 years of topographic photointerpretation of the Bío Bío province using aerial and drone imagery.</p>
+                </div>
+
+                <div class="experience-item cv-item category-C category-E category-A">
+                    <h3 data-es="Integrante del Comité Espejo Nacional ISO/TC211 (Información Geográfica / Geomática)">Member, National Mirror Committee ISO/TC211 (Geographic Information / Geomatics)</h3>
+                    <p data-es="Institución: Instituto Nacional de Normalización (INN), Chile / Fechas: agosto de 2016 – diciembre de 2018">Institution: Instituto Nacional de Normalización (INN), Chile / Dates: August 2016 - December 2018</p>
+                    <p class="description" data-es="Contribuyó a la normalización nacional de la información geográfica; dictó la charla «Calidad posicional» al comité (junio de 2017).">Contributed to national standardization of geographic information; gave the talk “Positional Quality” to the committee (June 2017).</p>
+                </div>
+
+                <div class="experience-item cv-item category-C category-E">
+                    <h3 data-es="Consultor técnico para proyectos del sector público">Technical Consultant for Public Sector Projects</h3>
+                    <p data-es="Institución: Municipalidad de Talcahuano / Fecha: mayo de 2010">Institution: Municipality of Talcahuano / Date: May 2010</p>
+                    <p class="description" data-es="Brindó asistencia técnica en la medición y evaluación de colectores de aguas lluvias del sector costero de Talcahuano tras el terremoto del 27F. Contribuyó a licitaciones del mercado público centradas en proyectos geomáticos y geoespaciales.">Provided technical assistance in the measurement and evaluation of stormwater drainage collectors in the coastal sector of Talcahuano after the 27F earthquake. Contributed to public market tenders, focusing on geomatics and geospatial projects.</p>
+                </div>
+
+                <div class="experience-item cv-item category-D category-F category-A">
+                    <h3 data-es="Divulgación científica y extensión">Science Outreach and Extension</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: 2013 – 2017">Institution: University of Concepción / Dates: 2013 - 2017</p>
+                    <p class="description" data-es="Dictó charlas sobre ciencia de la información geográfica, drones e imágenes aéreas en el programa «1000 científicos, 1000 aulas» en numerosos establecimientos de la región del Biobío (2016–2017). Director del proyecto de extensión «Conociendo Angola» (2015); colaborador en el evento sobre Infraestructuras de Datos Espaciales (IDE) (2016); autor de un artículo de divulgación sobre SIG en la Revista Raudal (2013).">Delivered talks on geographic information science, drones and aerial imagery for the “1000 Scientists, 1000 Classrooms” program in numerous schools of the Bío Bío region (2016–2017). Director of the extension project “Conociendo Angola” (2015); collaborator in the event on Spatial Data Infrastructures (IDE) (2016); author of a popular article on GIS in Revista Raudal (2013).</p>
+                </div>
+
+                <div class="experience-item cv-item category-A category-D">
+                    <h3 data-es="Comités académicos y representación">Academic Committees and Representation</h3>
+                    <p data-es="Institución: Universidad de Concepción / Fechas: 2013 – 2018">Institution: University of Concepción / Dates: 2013 - 2018</p>
+                    <p class="description" data-es="Delegado de la Escuela de Ciencias y Tecnologías ante Promored (2013); representante de la Escuela y del Departamento de Ciencias Geodésicas y Geomática en comités de educación continua, extensión y asistencia técnica (2018); integrante del comité científico del V Encuentro de Investigadores, Campus Los Ángeles (2017).">Delegate of the School of Sciences and Technologies to Promored (2013); representative of the School and of the Department of Geodetic Sciences and Geomatics in continuing education, extension and technical assistance committees (2018); member of the scientific committee of the V Researchers' Meeting, Los Ángeles Campus (2017).</p>
+                </div>
+
+                <div class="experience-item cv-item category-B">
+                    <h3 data-es="Revisor de artículos científicos">Peer Reviewer</h3>
+                    <p data-es="Revista: Información Tecnológica (SciELO) / Fecha: mayo de 2018">Journal: Información Tecnológica (SciELO) / Date: May 2018</p>
+                </div>
+            </div>
+
+            <!-- Research and Publications -->
+            <div class="section">
+                <h2>
+                    <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
+                        <i class="fab fa-linkedin"></i></a> <span data-es="Investigación y publicaciones">Research and Publications</span></h2>
+
+                <div class="experience-item cv-item category-B category-H category-C">
+                    <h3 data-es="Artículos en revistas">Journal articles</h3>
+                    <ul class="sub-list">
+                        <li data-es="Modelamiento de la dispersión de material particulado en la ciudad de Los Ángeles (Chile) por estufas a leña en período invernal usando AERMOD. <em>Obras y Proyectos, Revista de Ingeniería Civil</em>, 20, 44–54 (2016).">Modelling of particulate matter dispersion in Los Angeles city (Chile) from wood stoves in winter period using AERMOD. <em>Obras y Proyectos, Revista de Ingeniería Civil</em>, 20, 44–54 (2016).</li>
+                        <li>Imagen aérea como representación pictórica de la fotointerpretación topográfica de la provincia de Bío Bío (with R. Cárdenas and E. Gutiérrez). <em>Pensamiento, palabra y obra</em> (2019).</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item cv-item category-B category-C category-D category-F">
+                    <h3 data-es="Ponencias seleccionadas">Selected conference presentations</h3>
+                    <ul class="sub-list">
+                        <li data-es="Enfoque colaborativo y didáctica significativa para el aprendizaje de las macrocompetencias genéricas UdeC — 2.º Encuentro UdeC de Experiencias Educativas (2014).">Collaborative approach and meaningful didactics for learning UdeC generic macro-competencies — 2nd UdeC Meeting on Educational Experiences (2014).</li>
+                        <li data-es="Análisis de componentes principales en el estudio de la influencia del registro manual en la digitalización de elementos geográficos — 3.er Foro Nacional de Percepción Remota y SIG (2015); V Encuentro de Investigadores, UdeC Campus Los Ángeles (2017).">Principal component analysis of the influence of manual registration on digitizing geographic features — 3rd National Forum on Remote Sensing and GIS (2015); V Researchers' Meeting, UdeC Los Ángeles (2017).</li>
+                        <li data-es="Índice de causalidad y riesgo de incendio forestal en la Región del Biobío mediante SIG y análisis estadístico, 2006–2012 (con I. Battaglia) — 3.er Foro Nacional de Percepción Remota y SIG (2015).">Forest fire causality and risk index for the Biobío Region using GIS and statistical analysis, 2006–2012 (with I. Battaglia) — 3rd National Forum on Remote Sensing and GIS (2015).</li>
+                        <li data-es="Evaluación directa externa de la calidad temática de una cobertura shapefile y creación de sus metadatos (con D. Varas) — 2015 y 2017.">Direct external evaluation of the thematic quality of a shapefile and creation of its metadata (with D. Varas) — 2015 and 2017.</li>
+                        <li data-es="Aspectos implícitos de calidad en la información geográfica para la toma de decisiones — Seminario Internacional IDE Chile, Santiago (abril de 2017).">Implicit quality aspects of geographic information for decision-making — IDE Chile International Seminar, Santiago (April 2017).</li>
+                        <li data-es="Normalización de la calidad de la información geográfica como elemento de desarrollo — Seminario de Normas de Información Geográfica, Universidad de Santiago (diciembre de 2017).">Standardization of geographic information quality as an element of development — Seminar on Geographic Information Standards, Universidad de Santiago (December 2017).</li>
+                        <li data-es="La representación visual e interpretación topográfica de la provincia de Biobío a partir de imágenes aéreas capturadas con dron (con R. Cárdenas) — INVEDUC 2019.">Visual representation and topographic interpretation of the Bío Bío province from drone aerial imagery (with R. Cárdenas) — INVEDUC 2019.</li>
+                        <li data-es="IoT: nuevo contexto para la Geomática — Expo Geomática y Geomensura (noviembre de 2020).">IoT: A new context for Geomatics — Expo Geomática y Geomensura (November 2020).</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3 data-es="Obra creativa">Creative work</h3>
+                    <p data-es="Antología poética «Estación verso 2» (2002), Biblioteca Municipal de Los Ángeles.">Poetry anthology “Estación verso 2” (2002), Biblioteca Municipal de Los Ángeles.</p>
+                </div>
+            </div>
+
+            <!-- Certifications and Courses -->
+            <div class="section">
+                <h2>
+                    <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
+                        <i class="fab fa-linkedin"></i></a> <span data-es="Certificaciones y cursos">Certifications and Courses</span></h2>
+
+                <p class="note" data-es="<strong>MIT Professional Education:</strong> Economía circular; Sistemas de infraestructura sostenible; Plataformas digitales; Más allá del IoT: inteligencia sensorial; Estrategia de diseño de producto: plataformas y familias."><strong>MIT Professional Education:</strong> Circular Economy; Sustainable Infrastructure Systems; Digital Platforms; Beyond IoT: Sensory Intelligence; Product Design Strategy: Platforms and Families.</p>
+
+                <!-- Sustainability, environment and systems -->
+                <div class="certification-item cv-item category-B category-G category-H">
+                    <h3 data-es="Curso Economía Circular: Transición hacia la Sostenibilidad del Futuro">Course on Circular Economy: Transition to Sustainability of the Future</h3>
+                    <p>Institution: Massachusetts Institute of Technology (MIT)</p>
+                    <p>Date: October 4, 2022 – December 6, 2022</p>
+                </div>
+                <div class="certification-item cv-item category-B category-H">
+                    <h3 data-es="Curso Sistemas de Infraestructura Sostenible: Planificación, Análisis y Desarrollo">Course on Sustainable Infrastructure Systems: Planning, Analysis, and Development</h3>
+                    <p>Institution: Massachusetts Institute of Technology (MIT)</p>
+                    <p>Date: April 26, 2022 - June 21, 2022</p>
+                </div>
+                <div class="certification-item cv-item category-A category-B category-G">
+                    <h3 data-es="Curso Plataformas Digitales: Desarrollo y Toma de Decisiones">Course on Digital Platforms: Development and Decision Making</h3>
+                    <p>Institution: Massachusetts Institute of Technology (MIT)</p>
+                    <p>Date: April 26, 2022 – June 21, 2022</p>
+                </div>
+                <div class="certification-item cv-item category-B category-C category-H">
+                    <h3 data-es="Experto en Creación de Modelos de Simulación Ambiental">Expert in Environmental Simulation Model Creation</h3>
+                    <p>Institution: Instituto Latinoamericano de Ciencias</p>
+                    <p>Date: February 2013 – August 2013</p>
+                </div>
+                <div class="certification-item cv-item category-C category-H">
+                    <h3 data-es="Descripción, Evaluación y Mapeo de Suelos">Soil Description, Evaluation and Mapping</h3>
+                    <p>Institution: Facultad de Ciencias Forestales, Universidad de Concepción</p>
+                    <p>Date: December 2014</p>
+                </div>
+
+                <!-- Technical / geomatics -->
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Más allá del Internet de las Cosas (IoT): Inteligencia Sensorial y Tecnología Inteligente">Beyond Internet of Things (IoT): Sensory Intelligence and Smart Technology</h3>
+                    <p>Institution: Massachusetts Institute of Technology (MIT)</p>
+                    <p>Date: October 20, 2020 – January 26, 2021</p>
+                </div>
+                <div class="certification-item cv-item category-C category-G">
+                    <h3 data-es="Estrategia de Diseño de Producto: Plataformas y Familias">Product Design Strategy: Platforms and Families</h3>
+                    <p>Institution: Massachusetts Institute of Technology (MIT)</p>
+                    <p>Date: April 20, 2021 – June 15, 2021</p>
+                </div>
+                <div class="certification-item cv-item category-B category-C">
+                    <h3 data-es="Experto Universitario en Gestión de la Calidad de la Información Geográfica">University Expert in Geographic Information Quality Management</h3>
+                    <p>Institution: Universidad de Jaén, Spain</p>
+                    <p>Date: September 2010 – December 2013</p>
+                </div>
+                <div class="certification-item cv-item category-B category-C">
+                    <h3>Gestión de la Incertidumbre en Información Geográfica</h3>
+                    <p>Institution: Universidad de Catamarca, Facultad de Ciencias y Tecnologías Aplicadas</p>
+                    <p>Date: April 10-13, 2012</p>
+                </div>
+                <div class="certification-item cv-item category-A category-C">
+                    <h3>Gestión de proyectos SIG</h3>
+                    <p>Institution: Fundació Universitat de Girona: Innovació i Formació</p>
+                    <p data-es="Fecha: junio – julio de 2009 (certificado del 23 de septiembre de 2009)">Date: June – July 2009 (certificate dated September 23, 2009)</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Curso de especialización UNIGIS: Programación de Aplicaciones Web Map">UNIGIS Specialization: Web Map Application Programming</h3>
+                    <p>Institution: SIGTE, Universitat de Girona, Spain</p>
+                    <p>Date: March – April 2011</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Teledetección y Sistemas de Información Geográfica aplicados a la Viticultura">Remote Sensing and GIS Applied to Viticulture</h3>
+                    <p data-es="Institución: plataforma virtual AgerTechnology, La Rioja, España">Institution: AgerTechnology virtual platform, La Rioja, Spain</p>
+                    <p>Date: October – December 2012</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Curso de Postítulo: Cartografía Digital, GIS e Internet en el apoyo de Ingeniería e Investigación">Postgraduate Course: Digital Cartography, GIS and Internet in Support of Engineering and Research</h3>
+                    <p data-es="Institución: Universidad de Concepción, Laboratorio de Geomática">Institution: Universidad de Concepción, Geomatics Laboratory</p>
+                    <p>Date: March – April 2009</p>
+                </div>
+                <div class="certification-item cv-item category-C category-E">
+                    <h3 data-es="Uso de la Tecnología SIG en el Catastro">Use of GIS Technology in Cadastre</h3>
+                    <p data-es="Institución: Organización de los Estados Americanos (OEA), Aula Virtual">Institution: Organization of American States (OAS), Virtual Classroom</p>
+                    <p>Date: April – June 2010</p>
+                </div>
+                <div class="certification-item cv-item category-C category-E">
+                    <h3 data-es="Taller de Valuación Territorial y Catastro">Workshop on Territorial Valuation and Cadastre</h3>
+                    <p>Institution: Universidad de Concepción</p>
+                    <p>Date: December 2009</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Tecnología GPS en Topografía">GPS Technology in Surveying</h3>
+                    <p>Institution: Universidad de Concepción, Los Ángeles Campus</p>
+                    <p>Date: December 2008 – January 2009</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Uso de Técnicas de Sistemas Globales de Navegación por Satélite Diferenciales en Redes Geodésicas Activas">Use of Differential Global Navigation Satellite System Techniques in Active Geodetic Networks</h3>
+                    <p>Institution: University of Concepción, Chile</p>
+                    <p>Date: 2014</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3>Ingeniería de Estaciones Totales Leica y Modos de Medición GPS</h3>
+                    <p>Institution: Universidad de Concepción</p>
+                    <p>Date: September 2013</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3 data-es="Metodología de Posicionamiento GNSS de Precisión">Methodology of Precise GNSS Positioning</h3>
+                    <p>Institution: Universidad de Concepción, Escuela de Ciencias y Tecnologías</p>
+                    <p>Date: March 6, 2013</p>
+                </div>
+                <div class="certification-item cv-item category-C">
+                    <h3>Sistemas de Referencia Geodésicos (Geométricos) y Realizaciones</h3>
+                    <p>Institution: Universidad de Concepción, Escuela de Ciencias y Tecnologías</p>
+                    <p>Date: March 7-9, 2011</p>
+                </div>
+                <div class="certification-item cv-item category-B category-C">
+                    <h3>Geodesia Física: Herramientas para la Solución al Problema Altimétrico</h3>
+                    <p>Institution: Universidad de Catamarca</p>
+                    <p>Date: September 22-25, 2008</p>
+                </div>
+
+                <!-- Data and research methods -->
+                <div class="certification-item cv-item category-B category-C">
+                    <h3>Geoestadística aplicada a la Agrimensura</h3>
+                    <p>Institution: Universidad de Catamarca, Facultad de Tecnología y Ciencias Aplicadas</p>
+                    <p>Date: November 23-26, 2010</p>
+                </div>
+                <div class="certification-item cv-item category-B category-C">
+                    <h3>IDB10x: Datología: La Toma de Decisiones Basada en Datos</h3>
+                    <p>Institution: Inter American Development Bank through edX</p>
+                    <p>Date: November 01, 2015 – December 01, 2015</p>
+                </div>
+                <div class="certification-item cv-item category-B">
+                    <h3 data-es="Experimentación para la Mejora">Experimentation for Improvement</h3>
+                    <p data-es="Institución: Universidad McMaster, Departamento de Ingeniería Química, Canadá (Coursera)">Institution: McMaster University Department of Chemical Engineering, Canada (Coursera)</p>
+                    <p>Date: November 01, 2015 – December 17, 2015</p>
+                </div>
+                <div class="certification-item cv-item category-B">
+                    <h3 data-es="Análisis de Datos de Encuestas">Survey Data Analysis</h3>
+                    <p>Institution: University of Concepción, Chile</p>
+                    <p>Date: 2014</p>
+                </div>
+                <div class="certification-item cv-item category-B">
+                    <h3 data-es="Sistematización y Recolección de Datos en Investigación Cualitativa">Systematization and Data Collection in Qualitative Research</h3>
+                    <p>Institution: Facultad de Medicina, Universidad de Concepción</p>
+                    <p>Date: January 2014</p>
+                </div>
+
+                <!-- Leadership, projects and internationalization -->
+                <div class="certification-item cv-item category-A category-E">
+                    <h3>Impulsando las Capacidades en Investigación a Través de la Internacionalización</h3>
+                    <p>Institution: Universidad de Concepción, Proyecto “Programa para la Internacionalización en las Universidades de Chile y Perú (INCHIPE), financiado por la Comisión Europea en el Marco del Programa Erasmus+”</p>
+                    <p>Date: May 8 – 10, 2017</p>
+                </div>
+                <div class="certification-item cv-item category-A category-E">
+                    <h3>Planificación Estratégica en Internacionalización</h3>
+                    <p>Institution: Facultad de Economía, Universidad de Concepción, Proyecto INCHIPE (Erasmus+)</p>
+                    <p>Date: October 7-10, 2016</p>
+                </div>
+                <div class="certification-item cv-item category-A category-E">
+                    <h3 data-es="Capacitación INCHIPE: Acuerdos de Cooperación Internacional y Networks">INCHIPE Training: International Cooperation Agreements and Networks</h3>
+                    <p>Institution: Universidad Católica San Pablo, Arequipa, Peru</p>
+                    <p>Date: August 2016</p>
+                </div>
+                <div class="certification-item cv-item category-A category-C">
+                    <h3 data-es="Módulo Formativo 4 INCHIPE: Gestión de Bases de Datos y TI">INCHIPE Training Module 4: Database and IT Management</h3>
+                    <p data-es="Institución: plataforma de formación en línea de Erasmus+, Universidad de Sevilla, España">Institution: Erasmus+ online platform, Universidad de Sevilla, Spain</p>
+                    <p>Date: October – November 2016</p>
+                </div>
+                <div class="certification-item cv-item category-A category-E">
+                    <h3 data-es="Oportunidades de Financiación y Proyectos de Cooperación">Funding Opportunities and Cooperation Projects</h3>
+                    <p>Institution: University of Concepción</p>
+                    <p>Date: October 1, 2016</p>
+                </div>
+                <div class="certification-item cv-item category-A category-E">
+                    <h3 data-es="Organización y Gestión de Proyectos Internacionales">Organization and Management of International Projects</h3>
+                    <p>Institution: Viña del Mar University, Chile</p>
+                    <p>Date: January 7, 2016</p>
+                </div>
+                <div class="certification-item cv-item category-A category-E">
+                    <h3 data-es="IDB1x: Introducción a la Gestión para Resultados de Desarrollo">IDB1x: Introduction to Managing for Development Results</h3>
+                    <p>Institution: Inter-American Development Bank (IDBx) through edX</p>
+                    <p>Date: September – October 2014</p>
+                </div>
+                <div class="certification-item cv-item category-A category-F category-G">
+                    <h3 data-es="Programa de Formación de Formadores en Emprendimiento e Innovación con Enfoque Territorial">Program for Training Trainers in Entrepreneurship and Innovation with a Territorial Focus</h3>
+                    <p>Institution: Biobío and Arauco Provinces</p>
+                    <p>Date: N/A</p>
+                </div>
+
+                <!-- Education and training -->
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Interdisciplinariedad y Transdisciplinariedad: Un Enfoque Pedagógico">Interdisciplinarity and Transdisciplinarity: A Pedagogical Approach</h3>
+                    <p>Institution: University of Concepción, Los Ángeles Chile</p>
+                    <p>Date: April 20, 2022</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Gamificación y Uso de la Plataforma Nearpod para el Aprendizaje Activo en el Aula">Gamification and Use of the Nearpod Platform for Active Learning in the Classroom</h3>
+                    <p>Institution: University of Concepción</p>
+                    <p>Date: April 18-29, 2022</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3>Implementing Blended and Hybrid Learning: The MIT Way</h3>
+                    <p>Institution: University of Concepción</p>
+                    <p>Date: December 1-9, 2021</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Buenas Prácticas para la Enseñanza Online">Best Practices for Online Teaching</h3>
+                    <p>Institution: University of Concepción</p>
+                    <p>Date: March 27, 2020 – April 5, 2020</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Enseñanza Online con Canvas y Teams">Online Teaching with Canvas and Teams</h3>
+                    <p>Institution: University of Concepción</p>
+                    <p>Date: March 27, 2020 – April 5, 2020</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Diseño Instruccional: Una Nueva Mirada">Instructional Design: A New Perspective</h3>
+                    <p data-es="Institución: Universidad de Puerto Rico, Río Piedras (plataforma Miríada)">Institution: Universidad de Puerto Rico, Río Piedras (Miríada platform)</p>
+                    <p>Date: November – December 2013</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Modelo UdeC para la Enseñanza de Macrocompetencias Genéricas (cursos de formación e implementación)">UdeC Model for Teaching Generic Macro-competencies (training and implementation courses)</h3>
+                    <p>Institution: Universidad de Concepción</p>
+                    <p>Date: 2013 – 2014</p>
+                </div>
+                <div class="certification-item cv-item category-D">
+                    <h3 data-es="Taller de Desarrollo de Competencias Docentes: Investigación-Acción para Mejorar la Práctica Docente">Teaching Skills Workshop: Action Research to Improve Teaching Practice</h3>
+                    <p>Institution: Universidad de Concepción</p>
+                    <p>Date: August 27, 2013</p>
+                </div>
+
+                <!-- Public sector -->
+                <div class="certification-item cv-item category-E category-F">
+                    <h3 data-es="Licitación Pública: Ofertas Competitivas en el Mercado Público">Public Tender: Competitive Offers in the Public Market</h3>
+                    <p>Institution: Chile Compra Directorate</p>
+                    <p>Date: September 8, 2021</p>
+                </div>
+                <div class="certification-item cv-item category-E category-F category-G">
+                    <h3 data-es="Curso 1: Cómo ser Proveedor del Estado: Inscripción en Mercado Público y Administración del Escritorio">Course 1: How to Become a State Supplier: Registration in Public Market and Desktop Administration</h3>
+                    <p>Institution: Chile Compra Directorate</p>
+                    <p>Date: December 7-9, 2021</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; <span id="yr">2026</span> Cyberzone8. <span data-es="Todos los derechos reservados.">All rights reserved.</span></p>
+        </footer>
+
+    </div>
+
+    <script>
+        function printCV() { window.print(); }
+
+        /* ---------- Language (EN / ES) ---------- */
+        var lang = 'en';
+        var UI = {
+            en: {
+                all: 'Showing the complete CV. Select one or more tags to keep only the relevant content, then copy it.',
+                some: function (names, n) { return 'Showing: ' + names.join(' + ') + ' (' + n + ' entries). Click a tag again to remove it; use "All" to reset.'; },
+                skills: 'Skills and Competencies', software: 'Software and Programming', languages: 'Languages',
+                copiedRich: 'Copied with formatting', copiedText: 'Copied as plain text',
+                failRich: 'Copy failed: select the text manually', failText: 'Copy failed',
+                title: 'European CV · Gustavo Godoy'
+            },
+            es: {
+                all: 'Mostrando el CV completo. Selecciona una o más etiquetas para conservar solo el contenido relevante y luego cópialo.',
+                some: function (names, n) { return 'Mostrando: ' + names.join(' + ') + ' (' + n + ' entradas). Haz clic de nuevo en una etiqueta para quitarla; usa «Todo» para reiniciar.'; },
+                skills: 'Competencias y habilidades', software: 'Software y programación', languages: 'Idiomas',
+                copiedRich: 'Copiado con formato', copiedText: 'Copiado como texto plano',
+                failRich: 'No se pudo copiar: selecciona el texto manualmente', failText: 'No se pudo copiar',
+                title: 'CV europeo · Gustavo Godoy'
+            }
+        };
+
+        var MES = { January:'enero', February:'febrero', March:'marzo', April:'abril', May:'mayo', June:'junio', July:'julio', August:'agosto', September:'septiembre', October:'octubre', November:'noviembre', December:'diciembre' };
+        var MR = '(January|February|March|April|May|June|July|August|September|October|November|December)';
+        function trDate(s) {
+            s = s.replace(/^Dates:/, 'Fechas:').replace(/^Date:/, 'Fecha:');
+            s = s.replace(new RegExp(MR + ' (\\d{1,2})(\\s*[–-]\\s*(\\d{1,2}))?, (\\d{4})', 'g'), function (m, mo, d, rng, d2, y) {
+                var r = rng ? rng.replace(/\d+/, String(parseInt(d2, 10))) : '';
+                return parseInt(d, 10) + r + ' de ' + MES[mo] + ' de ' + y;
+            });
+            s = s.replace(new RegExp(MR + ' (\\d{4})', 'g'), function (m, mo, y) { return MES[mo] + ' de ' + y; });
+            s = s.replace(new RegExp(MR, 'g'), function (m) { return MES[m]; });
+            return s.replace('N/A', 'N/D');
+        }
+        var INST = [
+            ['Los Ángeles Campus', 'Campus Los Ángeles'], ['University of Concepción', 'Universidad de Concepción'],
+            ['Viña del Mar University', 'Universidad de Viña del Mar'], ['Chile Compra Directorate', 'Dirección ChileCompra'],
+            ['Inter-American Development Bank (IDBx) through edX', 'Banco Interamericano de Desarrollo (IDBx) a través de edX'],
+            ['Inter American Development Bank through edX', 'Banco Interamericano de Desarrollo a través de edX'],
+            ['Biobío and Arauco Provinces', 'Provincias de Biobío y Arauco'], ['Spain', 'España'], ['Peru', 'Perú']
+        ];
+        function trInst(s) {
+            s = s.replace(/^Institution:/, 'Institución:');
+            INST.forEach(function (pair) { s = s.split(pair[0]).join(pair[1]); });
+            return s;
+        }
+
+        function setLang(l) {
+            lang = (l === 'es') ? 'es' : 'en';
+            document.documentElement.lang = lang;
+            document.title = UI[lang].title;
+            try { localStorage.setItem('cv_lang', lang); } catch (e) {}
+
+            document.querySelectorAll('[data-es]').forEach(function (el) {
+                if (!el.hasAttribute('data-en')) el.setAttribute('data-en', el.innerHTML);
+                el.innerHTML = lang === 'es' ? el.getAttribute('data-es') : el.getAttribute('data-en');
+            });
+            // Automatic: label and date translation for simple "Institution:" / "Date:" lines
+            document.querySelectorAll('.column-2 p').forEach(function (p) {
+                if (p.hasAttribute('data-es')) return;
+                var t = p.hasAttribute('data-en') ? p.getAttribute('data-en') : p.textContent;
+                var isDate = /^Dates?:/.test(t), isInst = /^Institution:/.test(t);
+                if (!isDate && !isInst) return;
+                if (!p.hasAttribute('data-en')) p.setAttribute('data-en', t);
+                p.textContent = lang === 'es' ? (isDate ? trDate(t) : trInst(t)) : t;
+            });
+            document.querySelectorAll('.langsw button').forEach(function (b) {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+            applyFilter();
+        }
+
+        /* ---------- Move filter chips and print button into the sticky toolbar ---------- */
+        (function () {
+            var chips = document.querySelector('.filter-buttons');
+            var slot = document.getElementById('chips-slot');
+            if (chips && slot) { slot.appendChild(chips); }
+            var pb = document.getElementById('print-btn');
+            var ps = document.getElementById('print-slot');
+            if (pb && ps) { ps.appendChild(pb); }
+        })();
+
+        /* ---------- Multi-select filtering ---------- */
+        var selected = new Set();
+
+        function filterCategory(category) {
+            if (category === 'all') { selected.clear(); }
+            else if (selected.has(category)) { selected.delete(category); }
+            else { selected.add(category); }
+            applyFilter();
+        }
+
+        function matchesFilter(el) {
+            if (!selected.size) return true;
+            return Array.from(selected).some(function (c) { return el.classList.contains('category-' + c); });
+        }
+
+        function applyFilter() {
+            document.querySelectorAll('.cv-item').forEach(function (item) {
+                item.classList.toggle('hidden', !matchesFilter(item));
+            });
+            document.querySelectorAll('.column-1 ul').forEach(function (ul) {
+                var any = ul.querySelector('.cv-item:not(.hidden)');
+                ul.classList.toggle('hidden', !any);
+                var prev = ul.previousElementSibling;
+                if (prev && prev.tagName === 'H3') prev.classList.toggle('hidden', !any);
+            });
+            document.querySelectorAll('.column-2 > .section').forEach(function (sec) {
+                if (!sec.querySelector('.cv-item')) return;
+                sec.classList.toggle('hidden', !sec.querySelector('.cv-item:not(.hidden)'));
+            });
+            var names = [];
+            document.querySelectorAll('.filter-buttons button').forEach(function (b) {
+                var c = b.getAttribute('data-cat');
+                var on = c === 'all' ? selected.size === 0 : selected.has(c);
+                b.classList.toggle('active', on);
+                if (on && c !== 'all') names.push(b.textContent.trim());
+            });
+            var n = document.querySelectorAll('.column-2 .cv-item:not(.hidden)').length;
+            document.getElementById('status').textContent = selected.size ? UI[lang].some(names, n) : UI[lang].all;
+        }
+
+        /* ---------- Build a clean export of what is currently visible ---------- */
+        function buildExport() {
+            var T = UI[lang];
+            var root = document.createElement('div');
+            function add(tag, html) { var e = document.createElement(tag); e.innerHTML = html; root.appendChild(e); return e; }
+
+            var contact = [].slice.call(document.querySelectorAll('.contact-info p')).slice(0, 3)
+                .map(function (p) { return p.textContent.trim(); });
+            add('h1', 'Gustavo Godoy');
+            add('p', contact.join(' · ') + ' · linkedin.com/in/gustavo-godoy-9b505029 · github.com/cyberzone8');
+
+            var langIcon = document.querySelector('.fa-language');
+            if (langIcon) {
+                var lp = langIcon.closest('h3').nextElementSibling;
+                add('p', '<strong>' + T.languages + ':</strong> ' + lp.innerHTML.replace(/<br\s*\/?>/gi, ' · ').replace(/\s+/g, ' ').trim());
+            }
+
+            var uls = [].slice.call(document.querySelectorAll('.column-1 ul'));
+            function texts(ul) {
+                return [].slice.call(ul.querySelectorAll('.cv-item:not(.hidden)')).map(function (li) { return li.textContent.trim(); });
+            }
+            var skills = uls.length ? texts(uls[0]) : [];
+            var soft = [];
+            uls.slice(1).forEach(function (u) { soft = soft.concat(texts(u)); });
+            if (skills.length) { add('h2', T.skills); add('p', skills.join(' · ')); }
+            if (soft.length) { add('h2', T.software); add('p', soft.join(' · ')); }
+
+            document.querySelectorAll('.column-2 > .section').forEach(function (sec) {
+                if (sec.classList.contains('hidden')) return;
+                var c = sec.cloneNode(true);
+                c.classList.remove('section');
+                c.querySelectorAll('.hidden, i, a.icon-link, button').forEach(function (x) { x.remove(); });
+                root.appendChild(c);
+            });
+
+            var font = 'font-family:Calibri,Arial,sans-serif;color:#000;';
+            root.querySelectorAll('h1').forEach(function (e) { e.style.cssText = font + 'font-size:22pt;margin:0 0 4pt;'; });
+            root.querySelectorAll('h2').forEach(function (e) { e.style.cssText = font + 'font-size:13pt;text-transform:uppercase;color:#0b5d4b;border-bottom:1px solid #0b5d4b;margin:14pt 0 6pt;padding-bottom:2pt;'; e.textContent = e.textContent.trim(); });
+            root.querySelectorAll('h3').forEach(function (e) { e.style.cssText = font + 'font-size:11pt;font-weight:bold;margin:8pt 0 1pt;'; });
+            root.querySelectorAll('p').forEach(function (e) { e.style.cssText = font + 'font-size:10pt;margin:1pt 0;'; });
+            root.querySelectorAll('ul').forEach(function (e) { e.style.cssText = font + 'font-size:10pt;margin:2pt 0 4pt 16pt;padding:0;'; });
+            root.querySelectorAll('li').forEach(function (e) { e.style.cssText = font + 'font-size:10pt;margin:1pt 0;'; });
+            root.querySelectorAll('[class]').forEach(function (e) { e.removeAttribute('class'); });
+            root.querySelectorAll('[data-es],[data-en]').forEach(function (e) { e.removeAttribute('data-es'); e.removeAttribute('data-en'); });
+            return root;
+        }
+
+        function toText(root) {
+            var out = [];
+            (function walk(n) {
+                n.childNodes.forEach(function (ch) {
+                    if (ch.nodeType !== 1) return;
+                    var t = ch.tagName, txt = ch.textContent.replace(/\s+/g, ' ').trim();
+                    if (t === 'H1') out.push(txt.toUpperCase());
+                    else if (t === 'H2') out.push('\n\n' + txt.toUpperCase() + '\n' + '-'.repeat(Math.min(txt.length, 40)));
+                    else if (t === 'H3') out.push('\n' + txt);
+                    else if (t === 'P') out.push(txt);
+                    else if (t === 'UL' || t === 'OL') {
+                        [].slice.call(ch.children).forEach(function (li) { out.push('- ' + li.textContent.replace(/\s+/g, ' ').trim()); });
+                    } else walk(ch);
+                });
+            })(root);
+            return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+        }
+
+        /* ---------- Copy actions ---------- */
+        function toast(msg) {
+            var t = document.getElementById('toast');
+            if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.appendChild(t); }
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._h);
+            t._h = setTimeout(function () { t.classList.remove('show'); }, 2200);
+        }
+
+        function fallbackCopy(node) {
+            var holder = document.createElement('div');
+            holder.style.cssText = 'position:fixed;left:-99999px;top:0;background:#fff;color:#000;';
+            holder.appendChild(node);
+            document.body.appendChild(holder);
+            var r = document.createRange(); r.selectNodeContents(holder);
+            var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) {}
+            s.removeAllRanges();
+            document.body.removeChild(holder);
+            toast(ok ? UI[lang].copiedRich : UI[lang].failRich);
+        }
+
+        function copyRich() {
+            var node = buildExport();
+            var html = '<div style="font-family:Calibri,Arial,sans-serif;color:#000">' + node.innerHTML + '</div>';
+            var text = toText(node);
+            if (navigator.clipboard && window.ClipboardItem) {
+                navigator.clipboard.write([new ClipboardItem({
+                    'text/html': new Blob([html], { type: 'text/html' }),
+                    'text/plain': new Blob([text], { type: 'text/plain' })
+                })]).then(function () { toast(UI[lang].copiedRich); })
+                  .catch(function () { fallbackCopy(buildExport()); });
+            } else {
+                fallbackCopy(node);
+            }
+        }
+
+        function legacyText(t) {
+            var ta = document.createElement('textarea');
+            ta.value = t; ta.style.cssText = 'position:fixed;left:-99999px';
+            document.body.appendChild(ta); ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) {}
+            document.body.removeChild(ta);
+            toast(ok ? UI[lang].copiedText : UI[lang].failText);
+        }
+
+        function copyText() {
+            var text = toText(buildExport());
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () { toast(UI[lang].copiedText); })
+                    .catch(function () { legacyText(text); });
+            } else {
+                legacyText(text);
+            }
+        }
+
+        /* ---------- Init: ?lang=es, saved choice, or browser language ---------- */
+        document.getElementById('yr').textContent = new Date().getFullYear();
+        (function () {
+            var q = new URLSearchParams(location.search).get('lang');
+            var saved = null;
+            try { saved = localStorage.getItem('cv_lang'); } catch (e) {}
+            var initial = q || saved || ((navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+            setLang(initial);
+        })();
+    </script>
+</body>
+</html>
