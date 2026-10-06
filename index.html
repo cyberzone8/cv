@@ -80,6 +80,23 @@
             .container { display:block; border:0; margin:0; }
             .column-1 { background:#fff; border:0; }
         }
+        /* Navegación simple por vistas */
+        .menu { display:flex; flex-direction:column; gap:2px; margin:12px 0 6px; }
+        .menu a { display:block; padding:7px 10px; border-radius:8px; border-left:3px solid transparent; color:var(--fg); text-decoration:none; font-size:14.5px; }
+        .menu a:hover { background:#fff; }
+        .menu a.on { background:#fff; border-left-color:var(--ac); color:var(--ac); font-weight:600; }
+        .menu a.star::after { content:" ★"; color:var(--ac); }
+        .skills summary { cursor:pointer; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ac); margin:16px 0 6px; padding-bottom:4px; border-bottom:1px solid var(--bd); }
+        .view-off { display:none !important; }
+        .quick h2 { border:0; margin:0 0 10px; }
+        .quick .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:24px; }
+        .quick a { display:block; border:1px solid var(--bd); border-radius:10px; padding:10px 12px; text-decoration:none; color:var(--fg); background:#fff; }
+        .quick a:hover, .quick a.feat { border-color:var(--ac); }
+        .quick a b { display:block; color:var(--ac); }
+        .quick a span { font-size:13.5px; color:var(--mut); }
+        #mapfrm { width:100%; border:0; min-height:500px; display:block; }
+        @media (max-width:860px) { .menu { flex-direction:row; flex-wrap:wrap; } }
+        @media print { .view-off { display:block !important; } [data-view="mapa"], .quick, .menu { display:none !important; } }
     </style>
 </head>
 <body>
@@ -121,10 +138,20 @@
             <!-- Personal Information and Availability -->
             <div class="section">
                 <h1>Gustavo Godoy</h1>
+                <nav class="menu" id="menu" aria-label="Menu">
+                    <a href="#resumen" data-v="resumen" data-es="Perfil">Profile</a>
+                    <a href="#formacion" data-v="formacion" data-es="Formación">Education</a>
+                    <a href="#experiencia" data-v="experiencia" data-es="Experiencia">Experience</a>
+                    <a href="#investigacion" data-v="investigacion" data-es="Investigación">Research</a>
+                    <a href="#certificados" data-v="certificados" data-es="Certificados">Certificates</a>
+                    <a href="#mapa" data-v="mapa" class="star" data-es="Mapa de capacidades">Capability map</a>
+                </nav>
                 <div class="contact-info">
                     <p><i class="fas fa-map-marker-alt"></i>Cork, Ireland</p>
-                    <p><i class="fas fa-phone"></i>+353 83 137 2529</p>
-                    <p><i class="fas fa-envelope"></i>cyberzone8.tech@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i>Avda. Biobío s/n, San Carlos de Purén, comuna de Los Ángeles, Chile</p>
+                    <p><i class="fas fa-phone"></i>+353 83 137 2529 (Ireland)</p>
+                    <p><i class="fas fa-phone"></i>+56 9 8594 7020 (Chile)</p>
+                    <p><i class="fas fa-envelope"></i>gustavogodoy.phd@gmail.com</p>
                     <p>
                         <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
                             <i class="fab fa-linkedin"></i></a>
@@ -160,7 +187,8 @@
                 </div>
 
                 <!-- Skills and Competencies -->
-                <div class="section">
+                <div class="section"><details class="skills">
+                    <summary data-es="Competencias y software">Skills and software</summary>
                     <h3 data-es="Competencias y habilidades">Skills and Competencies</h3>
                     <ul>
                         <li class="cv-item category-A category-F" data-es="Trabaja bien bajo presión">Works well under pressure</li>
@@ -232,7 +260,7 @@
                         <li class="cv-item category-C category-D category-G">JavaScript</li>
                         <li class="cv-item category-D category-G">HTML/CSS</li>
                     </ul>
-                </div>
+                </details></div>
             </div>
             <button id="print-btn" onclick="printCV()" data-es="Imprimir / PDF">Print / PDF</button>
 
@@ -241,8 +269,19 @@
         <!-- Column 2 -->
         <div class="column column-2">
 
+            <div class="quick" id="quick">
+                <h2 data-es="¿Qué te gustaría ver?">What would you like to see?</h2>
+                <div class="grid">
+                    <a href="#formacion"><b data-es="Formación">Education</b><span data-es="Doctorado en Sostenibilidad (estudios completos), magíster e ingeniería">Doctorate in Sustainability (coursework complete), master's and engineering</span></a>
+                    <a href="#experiencia"><b data-es="Experiencia">Experience</b><span data-es="15+ años: docencia, jefatura de carrera, proyectos y asistencia técnica">15+ years: teaching, program leadership, projects and technical assistance</span></a>
+                    <a href="#investigacion"><b data-es="Investigación">Research</b><span data-es="Línea Psicosfera–Tecnósfera, artículos y ponencias">Psicosfera–Tecnósfera research line, articles and conference papers</span></a>
+                    <a href="#certificados"><b data-es="Certificados">Certificates</b><span data-es="MIT, ChileCompra, Erasmus+, geomática y docencia">MIT, ChileCompra, Erasmus+, geomatics and teaching</span></a>
+                    <a href="#mapa" class="feat"><b data-es="Mapa de capacidades ★">Capability map ★</b><span data-es="Cómo se conectan mis capacidades y en qué unidad municipal sirven, con evidencia">How my capabilities connect and where they fit in a municipality, with evidence</span></a>
+                </div>
+            </div>
+
             <!-- Professional Summary -->
-            <div class="section">
+            <div class="section view" id="v-resumen" data-view="resumen">
                 <h2>
                     <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
                         <i class="fab fa-linkedin"></i></a> <span data-es="Perfil profesional">Professional Summary</span></h2>
@@ -286,7 +325,7 @@
             </div>
 
             <!-- Education -->
-            <div class="section">
+            <div class="section view" id="v-formacion" data-view="formacion">
                 <h2>
                     <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
                         <i class="fab fa-linkedin"></i></a> <span data-es="Formación académica">Education</span></h2>
@@ -335,7 +374,7 @@
             </div>
 
             <!-- Professional Experience -->
-            <div class="section">
+            <div class="section view" id="v-experiencia" data-view="experiencia">
                 <h2>
                     <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
                         <i class="fab fa-linkedin"></i></a> <span data-es="Experiencia profesional">Professional Experience</span></h2>
@@ -427,10 +466,21 @@
             </div>
 
             <!-- Research and Publications -->
-            <div class="section">
+            <div class="section view" id="v-investigacion" data-view="investigacion">
                 <h2>
                     <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
                         <i class="fab fa-linkedin"></i></a> <span data-es="Investigación y publicaciones">Research and Publications</span></h2>
+
+                <div class="experience-item cv-item category-B category-H category-C">
+                    <h3 data-es="Línea de investigación: Psicosfera–Tecnósfera">Research line: Psicosfera–Tecnósfera</h3>
+                    <p class="description" data-es="Línea interdisciplinaria sobre cómo interactúan procesos humanos, relaciones sociales, instituciones, tecnologías y sistemas territoriales. Combina análisis territorial, pensamiento sistémico, realismo crítico y herramientas computacionales (análisis semántico y de redes) para generar hipótesis, manteniendo la validación empírica como etapa independiente.">Interdisciplinary line on how human processes, social relations, institutions, technologies and territorial systems interact. It combines territorial analysis, systems thinking, critical realism and computational tools (semantic and network analysis) to generate hypotheses, keeping empirical validation as a separate stage.</p>
+                    <ul class="sub-list">
+                        <li data-es="Resultados: 80 ciudades chilenas, 4 arquetipos de Resiliencia–Transformabilidad (R–T), período 2005–2023; casos Copiapó, Talcahuano, Valdivia y Angol.">Results: 80 Chilean cities, 4 Resilience–Transformability (R–T) archetypes, 2005–2023; cases Copiapó, Talcahuano, Valdivia and Angol.</li>
+                        <li data-es="Caso piloto: San Carlos de Purén (Biobío), entorno metodológico exploratorio.">Pilot case: San Carlos de Purén (Biobío), exploratory methodological environment.</li>
+                        <li data-es="Abierta a colaboración interdisciplinaria; citable en formato APA 7.ª edición.">Open to interdisciplinary collaboration; citable in APA 7th edition format.</li>
+                    </ul>
+                    <p><span data-es="Sitio:">Website:</span> <a href="https://cyberzone8.github.io/psychosphere-technosphere/" target="_blank" rel="noopener">cyberzone8.github.io/psychosphere-technosphere</a></p>
+                </div>
 
                 <div class="experience-item cv-item category-B category-H category-C">
                     <h3 data-es="Artículos en revistas">Journal articles</h3>
@@ -461,7 +511,7 @@
             </div>
 
             <!-- Certifications and Courses -->
-            <div class="section">
+            <div class="section view" id="v-certificados" data-view="certificados">
                 <h2>
                     <a href="https://www.linkedin.com/in/gustavo-godoy-9b505029/" target="_blank" class="icon-link">
                         <i class="fab fa-linkedin"></i></a> <span data-es="Certificaciones y cursos">Certifications and Courses</span></h2>
@@ -700,6 +750,10 @@
                     <p>Date: December 7-9, 2021</p>
                 </div>
             </div>
+            <!-- Capability map (embedded page) -->
+            <div class="section view" id="v-mapa" data-view="mapa" data-noexport>
+                <iframe id="mapfrm" title="Capability map" data-src="dsm-capacidades.html?embed=1"></iframe>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -839,7 +893,7 @@
             var root = document.createElement('div');
             function add(tag, html) { var e = document.createElement(tag); e.innerHTML = html; root.appendChild(e); return e; }
 
-            var contact = [].slice.call(document.querySelectorAll('.contact-info p')).slice(0, 3)
+            var contact = [].slice.call(document.querySelectorAll('.contact-info p')).slice(0, 5)
                 .map(function (p) { return p.textContent.trim(); });
             add('h1', 'Gustavo Godoy');
             add('p', contact.join(' · ') + ' · linkedin.com/in/gustavo-godoy-9b505029 · github.com/cyberzone8');
@@ -861,7 +915,7 @@
             if (soft.length) { add('h2', T.software); add('p', soft.join(' · ')); }
 
             document.querySelectorAll('.column-2 > .section').forEach(function (sec) {
-                if (sec.classList.contains('hidden')) return;
+                if (sec.classList.contains('hidden') || sec.hasAttribute('data-noexport')) return;
                 var c = sec.cloneNode(true);
                 c.classList.remove('section');
                 c.querySelectorAll('.hidden, i, a.icon-link, button').forEach(function (x) { x.remove(); });
@@ -966,6 +1020,25 @@
             var initial = q || saved || ((navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
             setLang(initial);
         })();
+
+        /* ---------- Navegación por vistas (#resumen, #formacion, ...) ---------- */
+        var VIEWS = ['resumen','formacion','experiencia','investigacion','certificados','mapa'];
+        function showView() {
+            var v = location.hash.replace('#','');
+            if (VIEWS.indexOf(v) < 0) v = 'resumen';
+            document.querySelectorAll('.column-2 > .view').forEach(function (s) { s.classList.toggle('view-off', s.getAttribute('data-view') !== v); });
+            document.getElementById('quick').classList.toggle('view-off', v !== 'resumen');
+            document.querySelectorAll('#menu a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-v') === v); });
+            if (v === 'mapa') { var f = document.getElementById('mapfrm'); if (!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-src')); }
+            window.scrollTo(0, 0);
+        }
+        window.addEventListener('hashchange', showView);
+        window.addEventListener('message', function (e) {
+            var f = document.getElementById('mapfrm');
+            if (f && e.source === f.contentWindow && e.data && e.data.dsmH) f.style.height = e.data.dsmH + 'px';
+        });
+        window.addEventListener('beforeprint', function () { document.querySelectorAll('details').forEach(function (d) { d.open = true; }); });
+        showView();
     </script>
 </body>
 </html>
