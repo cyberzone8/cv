@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alfabetización Digital Inteligente (HIA-T) para el Bienestar</title>
+<meta name="description" content="Un solo proyecto para que todos los actores del territorio aprendan, decidan y se cuiden en red. Región del Biobío, noviembre 2026.">
+<style>
+:root{
+  --ink:#16302e; --teal:#1f6f6b; --deep:#0f3633; --mist:#e6f2f1; --paper:#f8faf9; --sun:#e3a72f; --line:#b9d3d0;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;padding:clamp(1.5rem,6vh,4rem) clamp(1.5rem,8vw,7rem) 5.5rem;
+  display:flex;flex-direction:column;justify-content:center;overflow-y:auto;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+.slide.active{opacity:1;visibility:visible}
+.slide>*{max-width:62rem;width:100%}
+h1,h2{font-family:var(--serif);font-weight:700;line-height:1.1;margin:0 0 1.4rem;color:var(--deep)}
+h1{font-size:clamp(2.1rem,5.6vw,4.4rem)}
+h2{font-size:clamp(1.8rem,4vw,3rem)}
+h3{font-size:clamp(1.15rem,2vw,1.5rem);margin:0 0 .5rem;color:var(--teal)}
+p,li{font-size:clamp(1.05rem,1.9vw,1.45rem);line-height:1.5}
+p{margin:0 0 1rem}
+ul{margin:0;padding-left:1.3rem}
+li{margin-bottom:.55rem}
+li::marker{color:var(--teal)}
+.lead{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,2.4vw,1.8rem);max-width:40rem}
+.meta{margin-top:2.2rem;font-weight:600}
+
+/* Portada */
+.cover{background:var(--deep);color:#fff}
+.cover h1,.cover .lead{color:#fff}
+.cover .lead{color:#cfe6e4}
+.cover .meta{color:var(--sun)}
+
+/* Cifras */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:.5rem 0 1.8rem}
+.stat{padding:0 1.6rem;border-left:2px solid var(--line)}
+.stat:first-child{padding-left:0;border-left:0}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(2.4rem,6.4vw,5rem);line-height:1;color:var(--teal);margin-bottom:.6rem}
+.stat span{font-size:clamp(.95rem,1.6vw,1.2rem);line-height:1.4;display:block}
+.stat small{display:block;margin-top:.5rem;font-size:.85rem;color:#4a625f}
+.punch{font-family:var(--serif);font-size:clamp(1.3rem,2.8vw,2.1rem);font-weight:700;color:var(--deep)}
+.punch mark{background:none;color:inherit;box-shadow:inset 0 -.35em var(--sun)}
+
+/* Dos columnas */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,5vw,4rem)}
+.panel{background:var(--mist);padding:1.6rem 1.8rem;border-radius:4px}
+.panel p{margin-bottom:.6rem}
+.panel .q{font-family:var(--serif);font-style:italic}
+.panel .out{font-weight:700;color:var(--deep);margin:0}
+.three{margin-top:1.6rem;font-weight:600}
+
+.note{background:var(--deep);color:#fff;padding:1.4rem 1.8rem;border-radius:4px;margin-top:1.4rem}
+.note p{margin:0}
+.note strong{color:var(--sun)}
+.who{margin-top:1.6rem;border-top:2px solid var(--line);padding-top:1.1rem}
+.who p{margin:0 0 .3rem}
+
+/* Controles */
+.bar{position:fixed;left:0;right:0;bottom:0;height:4.2rem;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,4vw,3rem);background:rgba(248,250,249,.94);border-top:1px solid var(--line)}
+.bar.dark{background:rgba(15,54,51,.96);border-top-color:#2c5c58;color:#fff}
+.bar button{font:inherit;font-size:1rem;font-weight:600;min-height:44px;min-width:44px;padding:.4rem 1.1rem;border:2px solid var(--teal);
+  background:transparent;color:inherit;border-radius:4px;cursor:pointer}
+.bar.dark button{border-color:#8fc2be}
+.bar button:hover:not(:disabled){background:var(--teal);color:#fff}
+.bar button:disabled{opacity:.35;cursor:default}
+.count{font-weight:600;font-variant-numeric:tabular-nums}
+.prog{position:fixed;top:0;left:0;height:5px;background:var(--sun);width:0;transition:width .3s ease}
+
+@media (max-width:720px){
+  .stats{grid-template-columns:1fr;gap:1.4rem}
+  .stat,.stat:first-child{padding:0 0 0 1rem;border-left:2px solid var(--line)}
+  .cols{grid-template-columns:1fr}
+  .slide{justify-content:flex-start}
+}
+@media (prefers-reduced-motion:reduce){.slide,.prog{transition:none}}
+@media print{
+  body{overflow:visible}.deck{position:static}.bar,.prog{display:none}
+  .slide{position:static;opacity:1;visibility:visible;min-height:100vh;page-break-after:always;overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="prog" id="prog" aria-hidden="true"></div>
+<main class="deck" id="deck">
+
+<section class="slide cover" data-dark aria-label="Portada">
+  <h1>Alfabetización Digital Inteligente (HIA-T) para el Bienestar</h1>
+  <p class="lead">Un solo proyecto para que todos los actores del territorio aprendan, decidan y se cuiden en red.</p>
+  <p class="meta">Región del Biobío · Noviembre 2026 · Gustavo Godoy Uribe</p>
+</section>
+
+<section class="slide" aria-label="El dolor">
+  <h2>Un territorio que envejece más rápido que su acceso a la tecnología</h2>
+  <div class="stats">
+    <div class="stat"><b>84,1</b><span>personas de 65 años o más por cada 100 menores de 15 en el Biobío. A nivel nacional: 79.</span><small>Censo 2024, INE</small></div>
+    <div class="stat"><b>11,6%</b><span>de los hogares en Chile están formados solo por personas de 65 años o más. En 1992 eran 4,3%.</span><small>Censo 2024, INE</small></div>
+    <div class="stat"><b>88% → 41%</b><span>de los hogares con personas mayores tiene internet, pero solo cerca del 41% lo usa de forma efectiva.</span><small>UC-Confuturo, 2024</small></div>
+  </div>
+  <p class="punch">Tener internet no es saber usarlo. <mark>Hacemos mucho y cambia poco.</mark></p>
+</section>
+
+<section class="slide" aria-label="Lo que se hace hoy y lo que falta">
+  <h2>Hay esfuerzos valiosos, pero falta más y mejor</h2>
+  <div class="cols">
+    <div>
+      <h3>Lo que ya existe</h3>
+      <ul>
+        <li>Talleres de computación y celular en municipios, bibliotecas y organizaciones</li>
+        <li>Promoción y salud comunitaria en los CESFAM</li>
+        <li>Redes vecinales y familiares que ayudan como pueden</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Lo que falta</h3>
+      <ul>
+        <li>Continuidad y acompañamiento después del taller</li>
+        <li>Criterio: cuándo usar IA, qué verificar y qué datos nunca compartir</li>
+        <li>Recursos conectados entre sí y con el CESFAM</li>
+        <li>Llegar a mayores, cuidadoras y personas con discapacidad visual</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" aria-label="El método">
+  <h2>Dos lentes, una sola decisión</h2>
+  <div class="cols">
+    <div class="panel">
+      <h3>DMM · Diagnóstico de Mecanismos</h3>
+      <p class="q">¿Qué se repite y qué lo sostiene?</p>
+      <p>Explica por qué los recursos no se conectan ni se usan, y elige una palanca para cambiarlo.</p>
+      <p class="out">Producto: 1 palanca por problema</p>
+    </div>
+    <div class="panel">
+      <h3>DSM · Diagnóstico Salutogénico</h3>
+      <p class="q">¿Qué tenemos y qué genera salud aquí?</p>
+      <p>Descubre lo que ya existe y funciona, incluidos los activos que están dormidos.</p>
+      <p class="out">Producto: mapa vivo de activos</p>
+    </div>
+  </div>
+  <p class="three">La alfabetización digital inteligente fortalece la comprensibilidad, la manejabilidad y la significatividad.</p>
+</section>
+
+<section class="slide" aria-label="La propuesta">
+  <h2>Un curso gratuito de 3 clases</h2>
+  <p>Con ejemplos de nuestra comunidad, para mayores, cuidadoras, dirigentes y equipos de salud. Versión acompañada en sus sedes, por voz y con letra grande. Personas mayores y ciegas participan como expertas en el diseño.</p>
+  <h3>Qué podría ganar el CESFAM</h3>
+  <ul>
+    <li>Levantamiento de problemas y recursos clave, dentro y fuera del CESFAM</li>
+    <li>Directorio simple para la prescripción social y el trabajo comunitario</li>
+    <li>Insumos para el diagnóstico participativo y para postular a fondos</li>
+    <li>Apoyo, no carga: el equipo participa solo donde decida</li>
+    <li>Resultados que vuelven al equipo y a la comunidad</li>
+  </ul>
+</section>
+
+<section class="slide" aria-label="Cuidados y contacto">
+  <h2>Cuidados que asumimos</h2>
+  <ul>
+    <li>La IA no reemplaza el cuidado ni el criterio del equipo de salud.</li>
+    <li>Nunca se usan datos personales ni de salud de pacientes.</li>
+    <li>La participación es voluntaria y se puede retirar en cualquier momento.</li>
+  </ul>
+  <div class="note"><p>No prometemos cambiar un indicador clínico en 90 días: prometemos <strong>aprender qué funciona, para quién</strong>, y dejar una red que lo sostenga.</p></div>
+  <div class="who">
+    <p><strong>Gustavo Godoy Uribe</strong> · Investigador independiente y docente</p>
+    <p><a href="mailto:gustavogodoy.phd@gmail.com">gustavogodoy.phd@gmail.com</a> · <a href="tel:+56985947020">+56 9 8594 7020</a></p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" id="bar" aria-label="Navegación de la presentación">
+  <button id="prev" type="button" aria-label="Diapositiva anterior">Anterior</button>
+  <span class="count" id="count" aria-live="polite"></span>
+  <button id="next" type="button" aria-label="Diapositiva siguiente">Siguiente</button>
+</nav>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')),
+      prev=document.getElementById('prev'), next=document.getElementById('next'),
+      count=document.getElementById('count'), prog=document.getElementById('prog'),
+      bar=document.getElementById('bar'), i=0;
+
+  function go(n,fromHash){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){
+      var on=k===i; s.classList.toggle('active',on);
+      s.setAttribute('aria-hidden',on?'false':'true');
+      if(on) s.scrollTop=0;
+    });
+    count.textContent=(i+1)+' de '+slides.length;
+    prog.style.width=((i+1)/slides.length*100)+'%';
+    prev.disabled=i===0; next.disabled=i===slides.length-1;
+    bar.classList.toggle('dark',slides[i].hasAttribute('data-dark'));
+    if(!fromHash){ try{ history.replaceState(null,'','#'+(i+1)); }catch(e){} }
+  }
+
+  prev.onclick=function(){go(i-1)}; next.onclick=function(){go(i+1)};
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey) return;
+    var k=e.key;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();go(i+1)}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(i-1)}
+    else if(k==='Home'){go(0)} else if(k==='End'){go(slides.length-1)}
+    else if(k==='f'||k==='F'){
+      if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+      else if(document.exitFullscreen){ document.exitFullscreen(); }
+    }
+  });
+  var x0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>60) go(dx<0?i+1:i-1);
+  },{passive:true});
+  window.addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10); if(n) go(n-1,true)});
+
+  var start=parseInt(location.hash.slice(1),10);
+  go(start?start-1:0,true);
+})();
+</script>
+</body>
+</html>
